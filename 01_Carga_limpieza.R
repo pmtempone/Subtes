@@ -4,6 +4,7 @@ library(dplyr)
 library(funModeling)
 library(Rcpp)
 library(ggplot2)
+library(plotly)
 
 ---#carga de datos----
 
@@ -39,4 +40,6 @@ CANT_CORRECTIVO <- subte.estado.flota %>%                    # take the data.fra
   group_by(anio_mes,LINEA) %>%          # Then, with the filtered data, group it by "bb"
   summarise(Correctivo = sum(CORRECTIVO))
 
-ggplot(data = CANT_CORRECTIVO,mapping = aes(x=anio_mes,y=Correctivo,group=LINEA))+geom_line(aes(colour = LINEA))
+p <- ggplot(data = CANT_CORRECTIVO,mapping = aes(x=anio_mes,y=Correctivo,group=LINEA))+geom_line(aes(colour = LINEA))
+
+ggplotly(p)
