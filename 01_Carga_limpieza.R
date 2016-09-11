@@ -29,7 +29,7 @@ ggplot(data = subte.estado.flota,mapping = aes(x=anio_mes,y=EN_SERVICIO,group=1)
 
 CANT_SERV <- subte.estado.flota %>%                    # take the data.frame "data"
   filter(!is.na(EN_SERVICIO)) %>%
-  group_by(anio_mes,LINEA) %>%          # Then, with the filtered data, group it by "bb"
+  group_by(anio_mes,LINEA) %>%          # Then, with the filtered data, group it by "anio_mes,LINEA"
   summarise(Unique_Elements = sum(EN_SERVICIO))   # Now summarise with unique elements per group
 
 ggplot(data = CANT_SERV,mapping = aes(x=anio_mes,y=Unique_Elements,group=LINEA))+geom_line(aes(colour = LINEA))
@@ -37,17 +37,18 @@ ggplot(data = CANT_SERV,mapping = aes(x=anio_mes,y=Unique_Elements,group=LINEA))
 
 CANT_CORRECTIVO <- subte.estado.flota %>%                    # take the data.frame "data"
   filter(!is.na(CORRECTIVO)) %>%
-  group_by(anio_mes,LINEA) %>%          # Then, with the filtered data, group it by "bb"
+  group_by(anio_mes,LINEA) %>%          # Then, with the filtered data, group it by "anio_mes,LINEA"
   summarise(Correctivo = sum(CORRECTIVO))
 
-<<<<<<< HEAD
 ggplot(data = CANT_CORRECTIVO,mapping = aes(x=anio_mes,y=Correctivo,group=LINEA))+geom_line(aes(colour = LINEA))
 
 Cant_por_linea <- subte.estado.flota %>%                    # take the data.frame "data"
-  group_by(anio_mes,LINEA) %>%          # Then, with the filtered data, group it by "bb"
+  group_by(anio_mes,LINEA) %>%          # Then, with the filtered data, group it by "anio_mes,LINEA"
   summarise(Correctivo = sum(CORRECTIVO,na.rm=TRUE),En_servicio=sum(EN_SERVICIO,na.rm=TRUE),Reserva=sum(RESERVA,na.rm=TRUE),RG=sum(RG,na.rm=TRUE),RP=sum(RP,na.rm=TRUE),Judicial=sum(JUDICIAL,na.rm=TRUE),Alistamiento=sum(ALISTAMIENTO,na.rm=TRUE))
-=======
+
 p <- ggplot(data = CANT_CORRECTIVO,mapping = aes(x=anio_mes,y=Correctivo,group=LINEA))+geom_line(aes(colour = LINEA))
 
 ggplotly(p)
->>>>>>> 877d7b6907245ba88f6bc4dd008ca53b79892ba3
+
+
+
