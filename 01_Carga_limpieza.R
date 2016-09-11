@@ -40,3 +40,7 @@ CANT_CORRECTIVO <- subte.estado.flota %>%                    # take the data.fra
   summarise(Correctivo = sum(CORRECTIVO))
 
 ggplot(data = CANT_CORRECTIVO,mapping = aes(x=anio_mes,y=Correctivo,group=LINEA))+geom_line(aes(colour = LINEA))
+
+Cant_por_linea <- subte.estado.flota %>%                    # take the data.frame "data"
+  group_by(anio_mes,LINEA) %>%          # Then, with the filtered data, group it by "bb"
+  summarise(Correctivo = sum(CORRECTIVO,na.rm=TRUE),En_servicio=sum(EN_SERVICIO,na.rm=TRUE),Reserva=sum(RESERVA,na.rm=TRUE),RG=sum(RG,na.rm=TRUE),RP=sum(RP,na.rm=TRUE),Judicial=sum(JUDICIAL,na.rm=TRUE),Alistamiento=sum(ALISTAMIENTO,na.rm=TRUE))
