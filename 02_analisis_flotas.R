@@ -19,7 +19,7 @@ CANT_SERV <- subte.estado.flota %>%                    # take the data.frame "da
   group_by(anio_mes,LINEA) %>%          # Then, with the filtered data, group it by "bb"
   summarise(Unique_Elements = sum(EN_SERVICIO))   # Now summarise with unique elements per group
 
-servicio <- ggplot(data = CANT_SERV,mapping = aes(x=anio_mes,y=Unique_Elements,group=LINEA))+geom_line(aes(colour = LINEA))
+servicio <- ggplot(data = CANT_SERV,mapping = aes(x=as.factor(anio_mes),y=Unique_Elements,group=LINEA))+geom_line(aes(colour = LINEA))
 
 
 CANT_CORRECTIVO <- subte.estado.flota %>%                    # take the data.frame "data"
@@ -27,6 +27,6 @@ CANT_CORRECTIVO <- subte.estado.flota %>%                    # take the data.fra
   group_by(anio_mes,LINEA) %>%          # Then, with the filtered data, group it by "bb"
   summarise(Correctivo = sum(CORRECTIVO))
 
-correctivo <- ggplot(data = CANT_CORRECTIVO,mapping = aes(x=anio_mes,y=Correctivo,group=LINEA))+geom_line(aes(colour = LINEA))
+correctivo <- ggplot(data = CANT_CORRECTIVO,mapping = aes(x=as.factor(anio_mes),y=Correctivo,group=LINEA))+geom_line(aes(colour = LINEA))
 
 ggplotly(servicio)
