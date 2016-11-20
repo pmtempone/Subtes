@@ -1,0 +1,73 @@
+---
+title: "Análisis de subtes"
+author: "pmtempone"
+date: "29 de octubre de 2016"
+output: html_document
+---
+```{r,echo=FALSE,include=FALSE}
+library(dplyr)
+library(funModeling)
+library(Rcpp)
+library(ggplot2)
+library(plotly)
+
+load("~/Documentos/Proyectos/Subtes/Subtes_datos.RData") 
+```
+
+Análisis de Subtes de los datasets del gobierno de la ciudad, fuente: http://data.buenosaires.gob.ar/dataset/subte-trenes-despachados
+
+#Comparar líneas con coches en servicio por mes:
+
+```{r,echo=FALSE}
+df_status(subte.estado.flota)
+
+ggplot(data = CANT_SERV,mapping = aes(x=as.factor(anio_mes),y=Unique_Elements,group=LINEA))+geom_line(aes(colour = LINEA))+ylab("En Servicio")+theme(text = element_text(size=15),
+        axis.text.x = element_text(angle=90, vjust=1)) +xlab("Año-Mes")
+
+```
+
+#Comparar líneas con coches en correctivo por mes 
+
+```{r, echo=FALSE}
+
+p <- ggplot(data = CANT_CORRECTIVO,mapping = aes(x=as.factor(anio_mes),y=Correctivo,group=LINEA))+geom_line(aes(colour = LINEA))+theme(text = element_text(size=7),
+        axis.text.x = element_text(angle=90, vjust=1))+ xlab("Año-Mes")
+
+ggplotly(p)
+```
+
+#Comparar modelos de coche con correctivo
+
+```{r,echo=FALSE}
+
+cor_plot <- ggplot(data = Cor_flota,mapping = aes(x=Anio_Mes,y=Correctivo,group=FLOTA))+geom_line(aes(colour = paste(LINEA,FLOTA)))+ylab("En Correctivo")+theme(text = element_text(size=15),axis.text.x = element_text(angle=90, vjust=1),strip.background = element_rect(colour="red", fill="#CCCCFF")) +xlab("Año-Mes")+facet_grid(LINEA~.)+ scale_colour_manual(values=c(1:22))
+
+cor_plot
+
+```
+
+#Sacar el porcentaje de arreglo: correctivo dividido en servicio
+
+```{r,echo=FALSE}
+p2 <- ggplot(data = Cant_por_linea,mapping = aes(x=as.factor(anio_mes),y=Correctivo/En_servicio,group=LINEA))+geom_line(aes(colour = LINEA))+theme(text = element_text(size=7),
+        axis.text.x = element_text(angle=90, vjust=1))+ xlab("Año-Mes")+ylab("porcentaje de arreglo")
+
+ggplotly(p2)
+```
+
+#Cuántas interrupciones de servicio hay en la red de subte, general y por línea.
+
+```{r,,echo=FALSE}
+
+paste("Total de Interrupciones",sum(interrupciones_x_mes$Interrupciones))
+
+ggplot(data = interrupciones_x_mes,mapping = aes(x=FR1_FECHA,y=Interrupciones,group=FR1_LINEA))+geom_line(aes(colour = FR1_LINEA))
+
+#Promedios de interrupciones mensuales
+
+print(interrupciones_promedio)
+
+ggplot(data = interrupciones_promedio,mapping = aes(x=Mes,y=mean_interrupciones,group=FR1_LINEA))+geom_line(aes(colour = FR1_LINEA))
+
+```
+

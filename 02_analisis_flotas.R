@@ -25,8 +25,10 @@ servicio <- ggplot(data = CANT_SERV,mapping = aes(x=as.factor(anio_mes),y=Unique
 CANT_CORRECTIVO <- subte.estado.flota %>%                    # take the data.frame "data"
   filter(!is.na(CORRECTIVO)) %>%
   group_by(anio_mes,LINEA) %>%          # Then, with the filtered data, group it by "bb"
-  summarise(Correctivo = sum(CORRECTIVO))
+  dplyr::summarise(Correctivo = sum(CORRECTIVO))
 
 correctivo <- ggplot(data = CANT_CORRECTIVO,mapping = aes(x=as.factor(anio_mes),y=Correctivo,group=LINEA))+geom_line(aes(colour = LINEA))
 
-ggplotly(servicio)
+ggplotly(servicio+ylab("En Servicio"))
+ggplotly(correctivo)
+correctivo
