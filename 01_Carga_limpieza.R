@@ -1,4 +1,4 @@
-----#librerias----
+#----#librerias----
 
 library(dplyr)
 library(funModeling)
@@ -6,22 +6,22 @@ library(Rcpp)
 library(ggplot2)
 library(plotly)
 
----#carga de datos----
+#---#carga de datos----
 
-trenes.despachados <- read.csv2("trenes-despachados.csv",stringsAsFactors = FALSE)
-subte.estado.flota <- read.csv("subte-estado-flota.csv", sep=";")
+trenes.despachados <- read.csv2("formaciones-despachadas.csv",stringsAsFactors = FALSE)
+subte.estado.flota <- read.csv("estado-de-flota.csv", sep=";")
 
 str(trenes.despachados)
 summary(trenes.despachados)
 df_status(trenes.despachados)
 
-head(as.Date(trenes.despachados$FR1_FECHA,format = "%d/%m/%Y"))
+head(as.Date(trenes.despachados$X...FR1_FECHA,format = "%d/%m/%Y"))
 
-trenes.despachados$FR1_FECHA <- as.Date(trenes.despachados$FR1_FECHA,format = "%d/%m/%Y")
+trenes.despachados$FR1_FECHA <- as.Date(trenes.despachados$X...FR1_FECHA,format = "%d/%m/%Y")
 
-----#analisis estado flota----
+#----#analisis estado flota----
 
-subte.estado.flota$anio_mes <-  subte.estado.flota$ANIO*100+subte.estado.flota$MES
+subte.estado.flota$anio_mes <-  subte.estado.flota$ANIO*100+subte.estado.flota$X...MES
 
 df_status(subte.estado.flota)
 
