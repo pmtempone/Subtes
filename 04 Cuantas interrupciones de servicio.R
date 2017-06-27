@@ -12,7 +12,7 @@ str(trenes.despachados)
 
 head(trenes.despachados)
 
-trenes.despachados$FR1_FECHA <-  as.POSIXct(as.character(trenes.despachados$FR1_FECHA),format="%d/%m/%Y")
+trenes.despachados$FR1_FECHA <-  as.POSIXct(as.character(trenes.despachados$X...FR1_FECHA),format="%d/%m/%Y")
 trenes.despachados$FR1_SALC1 <- factor(substr(as.character(trenes.despachados$FR1_SALC1),1,2))
 trenes.despachados$FR1_SALC2 <- factor(substr(as.character(trenes.despachados$FR1_SALC2),1,2))
 
@@ -27,7 +27,8 @@ trenes_desp <- trenes_desp %>% mutate(interrupciones=(interrupcion_cab1+interrup
 
 interrupciones_x_mes <- trenes_desp %>% select(FR1_FECHA,FR1_LINEA,interrupciones) %>% group_by(FR1_FECHA,FR1_LINEA) %>% dplyr::summarise(Interrupciones = sum(interrupciones,na.rm=TRUE))
 
-ggplot(data = interrupciones_x_mes,mapping = aes(x=FR1_FECHA,y=Interrupciones,group=FR1_LINEA))+geom_line(aes(colour = FR1_LINEA))
+f <- ggplotly(ggplot(data = interrupciones_x_mes,mapping = aes(x=FR1_FECHA,y=Interrupciones,fill=FR1_LINEA))+geom_line(aes(colour = FR1_LINEA))+xlab('Fecha')+labs(colour='LINEA'))
+
 
 sum(interrupciones_x_mes$Interrupciones)
 
