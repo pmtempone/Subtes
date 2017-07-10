@@ -1,4 +1,4 @@
-----#librerias----
+#----#librerias----
 
 library(dplyr)
 library(funModeling)
@@ -7,7 +7,7 @@ library(ggplot2)
 library(plotly)
 
 
----#analisis---
+#---#analisis---
   
   
   df_status(subte.estado.flota)
