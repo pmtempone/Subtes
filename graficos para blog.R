@@ -31,7 +31,7 @@ p = plot_ly(data=lineas_servicio, x = ~ anio_mes, y = ~ linea_a, name = 'A', typ
      add_trace(y = ~lineas_servicio$linea_p, name = 'P', mode = 'lines') %>%
      layout(xaxis = list(title = "Mes"),yaxis = list(title="cantidad en servicio"))
   
-  
+p
 
 linea_correctivo <- dcast(CANT_CORRECTIVO, anio_mes ~ LINEA)
 
